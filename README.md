@@ -2,7 +2,6 @@
 
 
 ##Example
-
   <?php  
     require("mysql.inc.php");
   
