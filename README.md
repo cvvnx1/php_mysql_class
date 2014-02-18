@@ -1,7 +1,7 @@
 #php_mysql_class
 
 
-##Example
+## Example
   <?php  
     require("mysql.inc.php");
   
