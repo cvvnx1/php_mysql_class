@@ -7,10 +7,10 @@
     require("mysql.inc.php");
   
   // inital object ins as mysql class
-    $ins = new mysql;
+  $ins = new mysql;
   
   // connect to mysql server
-    $ins->connect("hostname","user","psw","dbname");
+  $ins->connect("hostname","user","psw","dbname");
   
   // print mysql server version
     print $ins->version();
