@@ -12,8 +12,10 @@ mysql connection system functions
   and select db, watch connection status, close connections
 
   sample code:
-    
-
+    $ins = new mysql;
+    $ins->connect("hostname","user","psw","dbname");
+    print $ins->version();
+    $ins->close();
 */
   // connect function
   function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE, $dbcharset2 = ''){
@@ -68,8 +70,13 @@ mysql query and count functions
   and watch affected rows, watch insert id
 
   sample code:
-    
+    $ins = new mysql;
+    $ins->connect("hostname","user","psw","dbname");
+    $result = $ins->query("SELECT * FROM table");
+    print $ins->affected_rows();
 
+    $result = $ins->query("INSERT INTO table(column) VALUE('value')")
+    print $ins->insert_id();
 */
 
   // query function -- execute mysql query @$this->link
@@ -105,8 +112,17 @@ result status functions
     field number of result
 
   sample code:
-    
+    $ins = new mysql;
+    $ins->connect("hostname","user","psw","dbname");
+    $result = $ins->query("SELECT * FROM table");
 
+    for ($i=0; $i<$ins->num_rows($result); $i++){
+      print_r ($ins->fetch_row($result));
+    }
+
+    for ($i=0; $i<$ins->num_fields($result); $i++){
+      print_r ($ins->fetch_field($result));
+    }
 */
 
   // num_rows function -- return row number of mysql query result
@@ -134,14 +150,22 @@ fetch data from result functions
     fetch field
 
   sample code:
-    
+    $ins = new mysql;
+    $ins->connect("hostname","user","psw","dbname");
+    $result = $ins->query("SELECT * FROM table");
 
+    for ($i=0; $i<$ins->num_rows($result); $i++){
+      print_r ($ins->fetch_row($result));
+    }
+
+    for ($i=0; $i<$ins->num_fields($result); $i++){
+      print_r ($ins->fetch_field($result));
+    }
 */
 
   // result function -- return mysql query result
   function result($query, $row = 0){
-    $query = @mysql_result($query, $row);
-    return $query;
+    return @mysql_result($query, $row);
   }
 
   // fetch_array function -- fetch associative array from result
@@ -159,8 +183,8 @@ fetch data from result functions
     return mysql_fetch_row($query);
   }
 
-  // fetch_fields function -- fetch field array from result
-  function fetch_fields($query){
+  // fetch_field function -- fetch field array from result
+  function fetch_field($query){
     return mysql_fetch_field($query);
   }
 
@@ -170,13 +194,14 @@ class
   and watch affected rows, watch insert id
 
   sample code:
-    
-
+    $ins = new mysql;
+    $sql = "SELECT * FROM table";
+    print $ins->notice("Error at",$sql);
 */
 
   // notice function -- return error information for this class
-  function notice($message = 'run mysql have a error at ', $sql = ''){
-    return $message.$sql;
+  function notice($message = 'run mysql have a error at', $sql = ''){
+    return $message." ".$sql;
   }
 
 }
